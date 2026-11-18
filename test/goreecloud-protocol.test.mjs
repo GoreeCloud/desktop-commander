@@ -51,3 +51,61 @@ test('MCP handshake and tool schema discovery in an isolated home', { timeout: 2
     fs.rmSync(sandbox, { recursive: true, force: true });
   }
 });
+
+test('actual stdio MCP dispatcher fails closed for unapproved operations', { timeout: 25000 }, async () => {
+  const sandbox = fs.mkdtempSync(path.join(os.tmpdir(), 'gc-dc-mcp-denied-'));
+  const inside = path.join(sandbox, 'inside.txt');
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'gc-dc-mcp-outside-'));
+  const outsideFile = path.join(outside, 'outside.txt');
+  fs.writeFileSync(inside, 'local test content');
+  fs.writeFileSync(outsideFile, 'outside test content');
+  const attemptedFile = path.join(sandbox, 'should-not-exist.txt');
+  let client;
+  try {
+    const transport = new StdioClientTransport({
+      command: process.execPath,
+      args: [path.join(projectRoot, 'dist/index.js'), '--no-onboarding'],
+      cwd: sandbox,
+      env: {
+        ...process.env,
+        HOME: sandbox,
+        USERPROFILE: sandbox,
+        DESKTOP_COMMANDER_DISABLE_TELEMETRY: '1',
+        GOREECLOUD_ALLOWED_ROOTS: sandbox,
+        GOREECLOUD_ALLOW_WRITES: '0',
+        GOREECLOUD_ALLOW_TERMINAL: '0',
+        GOREECLOUD_ALLOW_URL_READS: '0',
+      },
+      stderr: 'pipe',
+    });
+    client = new Client({ name: 'goreecloud-ci-denied', version: '0.1.0' });
+    await client.connect(transport);
+    const deniedWrite = await client.callTool({
+      name: 'write_file', arguments: { path: attemptedFile, content: 'should never be written' },
+    });
+    assert.equal(deniedWrite.isError, true, JSON.stringify(deniedWrite));
+    assert.equal(fs.existsSync(attemptedFile), false);
+    const deniedShell = await client.callTool({
+      name: 'start_process', arguments: { command: 'echo should-not-run' },
+    });
+    assert.equal(deniedShell.isError, true, JSON.stringify(deniedShell));
+    const deniedOutside = await client.callTool({
+      name: 'read_file', arguments: { path: outsideFile },
+    });
+    assert.equal(deniedOutside.isError, true, JSON.stringify(deniedOutside));
+    assert.doesNotMatch(JSON.stringify(deniedOutside.content), /outside test content/);
+    const insideRead = await client.callTool({
+      name: 'read_file', arguments: { path: inside },
+    });
+    assert.notEqual(insideRead.isError, true, JSON.stringify(insideRead));
+    assert.match(JSON.stringify(insideRead.content), /local test content/);
+    const deniedRemote = await client.callTool({
+      name: 'get_config', arguments: {}, _meta: { remote: true },
+    });
+    assert.equal(deniedRemote.isError, true, JSON.stringify(deniedRemote));
+  } finally {
+    if (client) await client.close();
+    fs.rmSync(sandbox, { recursive: true, force: true });
+    fs.rmSync(outside, { recursive: true, force: true });
+  }
+});
