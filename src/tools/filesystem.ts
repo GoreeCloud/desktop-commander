@@ -113,22 +113,20 @@ async function getAllowedDirs(): Promise<string[]> {
     try {
         let allowedDirectories;
         const config = await configManager.getConfig();
-        if (config.allowedDirectories && Array.isArray(config.allowedDirectories)) {
+        if (config.allowedDirectories && Array.isArray(config.allowedDirectories) && config.allowedDirectories.length > 0) {
             allowedDirectories = config.allowedDirectories;
         } else {
             // Fall back to default directories if not configured
-            allowedDirectories = [
-                os.homedir()   // User's home directory
-            ];
+            allowedDirectories = [process.cwd()]; // Default to this working directory
             // Update config with default
             await configManager.setValue('allowedDirectories', allowedDirectories);
         }
         return allowedDirectories;
     } catch (error) {
         console.error('Failed to initialize allowed directories:', error);
-        // Keep the default permissive path
+        // Fail closed on configuration errors rather than allow all filesystem paths.
     }
-    return [];
+    return [process.cwd()];
 }
 
 // Normalize all paths consistently

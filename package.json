@@ -27,7 +27,7 @@
     "build": "tsc && shx mkdir -p dist/data && shx cp src/data/onboarding-prompts.json dist/data/ && shx mkdir -p dist/remote-device/scripts && shx cp src/remote-device/scripts/blocking-offline-update.js dist/remote-device/scripts/ && node scripts/build-ui-runtime.cjs",
     "test": "npm run build && npm run test:goreecloud",
     "test:ci": "npm test",
-    "test:goreecloud": "node --test test/goreecloud-hardening.test.mjs test/goreecloud-protocol.test.mjs",
+    "test:goreecloud": "node --test test/goreecloud-hardening.test.mjs test/goreecloud-safety.test.mjs test/goreecloud-protocol.test.mjs",
     "validate:tools": "npm run build && node scripts/validate-tools-sync.js",
     "test:upstream": "npm run build && node test/run-ci.js"
   },
