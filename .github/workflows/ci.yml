@@ -26,5 +26,7 @@ jobs:
         run: npm run build
       - name: Verify local privacy, safety gates, and MCP protocol
         run: npm run test:goreecloud
-      - name: Check production dependency advisories
+      - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=moderate
+      - name: Audit development and production dependencies
+        run: npm audit --audit-level=moderate
