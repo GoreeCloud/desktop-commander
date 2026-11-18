@@ -14,6 +14,6 @@ The repository's CI now verifies the build, focused protocol smoke and privacy c
 - Remote broker/device authentication, revocation, transport security and explicit consent are not implemented as GoreeCloud services.
 - The imported code retains unenabled upstream remote-agent source whose security, third-party rights, and network behavior need further inspection.
 - GoreeCloud Identity, GoreeShield, Wardveil, Mesh and GoreeCloud UI integrations remain incomplete; native Linux/Android acceptance remains future work.
-- Development/optional dependencies and runtime downloads require their own separate assessment. A production-only npm audit does not inspect all application risks.
+- The active npm development-toolchain dependencies have been reduced to drop inherited, unused archive-packaging, MCP bundle-building, remote MQTT fixture and coverage tooling. Following that change a **full npm audit including dev dependencies returned 0 findings** at the time of the check. This registry audit does not inspect runtime downloads, unreachable inherited source, optional binaries, dynamic network actions or future dependency updates. Historical upstream test scripts requiring removed toolchains are not acceptance evidence.
 
 **No public remote deployment or stable release is approved.** Do not expose this MCP server to untrusted clients. Use a least-privileged local account and a staged, reversible acceptance process.
