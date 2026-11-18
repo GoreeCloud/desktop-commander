@@ -12,7 +12,7 @@ The MIT source includes local MCP primitives for file operations, directory sear
 
 Local MCP requests now have an additional **development safety gate**: filesystem reads are scoped to the working directory by default; configuration/file writes, terminal/process tools and URL reads require explicit operator environment opt-in. A fake or forwarded remote tool marker is always refused. This is a policy guard, **not an operating-system sandbox**. Read [SECURITY.md](SECURITY.md) for configuration and limitations.
 
-This is not an independently self-hosted remote agent/broker. No production-grade authentication, authorization, secured remote relay, native Linux application, Android app, deployment, stable release, or MIPS integration is established. Inherited remote-agent source is not a supported GoreeCloud service.
+This is not an independently self-hosted remote agent/broker. No production-grade authentication, authorization, secured remote relay, native Linux application, Android app, deployment, stable release, or MIPS integration is established. Inherited remote-agent source is not a supported GoreeCloud service and is **excluded from the distributed build**. The public npm build does not include its upstream hosted-relay client or direct Supabase/MQTT dependencies.
 
 ## Local development
 

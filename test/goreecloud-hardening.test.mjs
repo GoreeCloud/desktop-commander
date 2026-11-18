@@ -40,3 +40,11 @@ test('mandatory root and docs files exist', () => {
   const pkg = JSON.parse(read('package.json'));
   assert.equal(pkg.mcpName, 'app.goreecloud/desktop-commander');
 });
+
+test('hosted upstream remote agent is absent from the local distribution', () => {
+  const pkg=JSON.parse(read('package.json'));
+  assert.equal(pkg.dependencies['@supabase/supabase-js'], undefined);
+  assert.equal(pkg.dependencies.mqtt, undefined);
+  assert.equal(existsSync(resolve(root, 'dist/remote-device')), false);
+  assert.equal(existsSync(resolve(root, 'dist/npm-scripts/remote.js')), false);
+});
