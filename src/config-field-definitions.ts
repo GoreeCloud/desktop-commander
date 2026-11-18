@@ -15,7 +15,7 @@ export const CONFIG_FIELD_DEFINITIONS = {
   },
   allowedDirectories: {
     label: 'Allowed Folders',
-    description: 'These are the folders Desktop Commander is allowed to read and edit. Think of this as a permission list. Keeping it small is safer. If this list is empty, Desktop Commander can access your entire filesystem.',
+    description: 'These are the folders Desktop Commander is allowed to read and edit. Think of this as a permission list. Keeping it small is safer. GoreeCloud resets an empty list to the working directory and additionally enforces operator-set GOREECLOUD_ALLOWED_ROOTS.',
     valueType: 'array',
   },
   defaultShell: {

@@ -22,7 +22,7 @@ jobs:
           cache: npm
       - name: Install without lifecycle scripts
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Verify local privacy defaults
-        run: npm run test:goreecloud
       - name: Compile server and UI
         run: npm run build
+      - name: Verify local privacy and safety gates
+        run: npm run test:goreecloud

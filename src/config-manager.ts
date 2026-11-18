@@ -276,7 +276,7 @@ class ConfigManager {
         "takeown"    // Take ownership of files
       ],
       defaultShell: getDefaultShell(),
-      allowedDirectories: [],
+      allowedDirectories: [process.cwd()], // Scope new local configurations to the working directory
       telemetryEnabled: false, // GoreeShield: opt-out by default and no upstream telemetry
       fileWriteLineLimit: 50,  // Default line limit for file write operations (changed from 100)
       fileReadLineLimit: 1000,  // Default line limit for file read operations (changed from character-based)

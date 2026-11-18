@@ -10,6 +10,8 @@ This repository is MIT-licensed with preserved upstream author rights; see [LICE
 
 The MIT source includes local MCP primitives for file operations, directory search, source editing, command/process handling, and file previews. GoreeCloud modifications disable upstream installation telemetry, regular usage telemetry, persisted raw tool-call argument/output history, upstream background feature-flag polling, marketing onboarding and automatic browser download at startup. The inherited hosted remote mode is disabled: the local executable refuses a remote connection.
 
+Local MCP requests now have an additional **development safety gate**: filesystem reads are scoped to the working directory by default; configuration/file writes, terminal/process tools and URL reads require explicit operator environment opt-in. A fake or forwarded remote tool marker is always refused. This is a policy guard, **not an operating-system sandbox**. Read [SECURITY.md](SECURITY.md) for configuration and limitations.
+
 This is not an independently self-hosted remote agent/broker. No production-grade authentication, authorization, secured remote relay, native Linux application, Android app, deployment, stable release, or MIPS integration is established. Inherited remote-agent source is not a supported GoreeCloud service.
 
 ## Local development
@@ -18,7 +20,7 @@ Requirements: Node.js 22.12+ and npm on a device you own or are authorized to co
 
 1. Clone https://github.com/GoreeCloud/desktop-commander and enter the project directory.
 2. Run npm ci --ignore-scripts --no-audit --no-fund.
-3. Run npm run test:goreecloud and npm run build.
+3. Run npm run build and then npm run test:goreecloud (or run npm test for both).
 4. Configure a **trusted local stdio MCP client** to launch node /absolute/path/to/desktop-commander/dist/index.js --no-onboarding.
 
 Commands, filesystem permissions, file conversion and running processes inherit the user account's privileges. Never install as root, connect to untrusted AI agents, or expose an MCP endpoint publicly without independently reviewed security controls. A client may request network access via its commands, so the telemetry shutoff is **not** a universal network block.
