@@ -83,6 +83,7 @@ import {
 } from './ui/contracts.js';
 import { listUiResources, readUiResource } from './ui/resources.js';
 import { shouldShowMcpUiPreviews } from './utils/mcp-ui-ab-test.js';
+import { evaluateLocalMcpPolicy } from './goreecloud-safety.js';
 
 // Store startup messages to send after initialization
 const deferredMessages: Array<{ level: string, message: string }> = [];
@@ -351,8 +352,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                         - fileWriteLineLimit (number, max lines per write_file call)
                         - telemetryEnabled (boolean)
                         
-                        IMPORTANT: Setting allowedDirectories to an empty array ([]) allows full access 
-                        to the entire file system, regardless of the operating system.
+                        GoreeCloud default: an empty directory list is reset to the working
+                        directory. GOREECLOUD_ALLOWED_ROOTS is enforced independently.
                         
                         ${CMD_PREFIX_DESCRIPTION}`,
                 inputSchema: zodToJsonSchema(SetConfigValueArgsSchema),
@@ -1206,6 +1207,10 @@ function pathArguments(args: unknown): unknown[] {
 
 async function handleCallToolRequest(request: CallToolRequest): Promise<ServerResult> {
     const { name, arguments: args } = request.params;
+    const policy = evaluateLocalMcpPolicy(name, args, request.params._meta);
+    if (!policy.allowed) {
+        return { content: [{ type: 'text', text: `GoreeCloud local safety policy: ${policy.reason}` }], isError: true };
+    }
     const startTime = Date.now();
     // Hoisted above the try so the finally block can read them when emitting the
     // server_call_tool completion event (duration + status), even on the crash path.
