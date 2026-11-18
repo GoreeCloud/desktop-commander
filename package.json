@@ -24,7 +24,7 @@
     "testemonials"
   ],
   "scripts": {
-    "build": "tsc && shx mkdir -p dist/data && shx cp src/data/onboarding-prompts.json dist/data/ && shx mkdir -p dist/remote-device/scripts && shx cp src/remote-device/scripts/blocking-offline-update.js dist/remote-device/scripts/ && node scripts/build-ui-runtime.cjs",
+    "build": "tsc && shx mkdir -p dist/data && shx cp src/data/onboarding-prompts.json dist/data/ && node scripts/build-ui-runtime.cjs",
     "test": "npm run build && npm run test:goreecloud",
     "test:ci": "npm test",
     "test:goreecloud": "node --test test/goreecloud-hardening.test.mjs test/goreecloud-safety.test.mjs test/goreecloud-protocol.test.mjs"
@@ -51,7 +51,6 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",
     "@opendocsg/pdf2md": "0.3.4",
-    "@supabase/supabase-js": "^2.89.0",
     "@tiptap/core": "^3.31.4",
     "@tiptap/extension-image": "^3.31.4",
     "@tiptap/extension-table": "^3.31.4",
@@ -68,7 +67,6 @@
     "isbinaryfile": "^5.0.4",
     "markdown-it": "^14.1.0",
     "md-to-pdf": "^5.2.5",
-    "mqtt": "5.16.0",
     "node-forge": "1.4.3",
     "open": "^10.2.0",
     "pdf-lib": "^1.17.1",

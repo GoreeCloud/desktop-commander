@@ -11,6 +11,7 @@
 | Local MCP filesystem path scope | Added source-level operator-controlled gate; OS sandbox not yet provided |
 | File-write and command approval | Disabled by default; requires trusted operator environment flags |
 | Official Remote Desktop Commander hosted relay | Not imported; remote command disabled |
+| Inherited upstream hosted-relay agent | Excluded from generated distributable; independent GoreeCloud agent not implemented |
 | Original GoreeCloud remote broker and device pairing | Not implemented |
 | GoreeCloud UI, Mesh, Identity, GoreeShield and Wardveil integrations | Not yet implemented or tested |
 | Native Linux/Android user interface | Not implemented |
