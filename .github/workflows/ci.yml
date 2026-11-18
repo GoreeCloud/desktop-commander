@@ -24,5 +24,7 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Compile server and UI
         run: npm run build
-      - name: Verify local privacy and safety gates
+      - name: Verify local privacy, safety gates, and MCP protocol
         run: npm run test:goreecloud
+      - name: Check production dependency advisories
+        run: npm audit --omit=dev --audit-level=moderate
