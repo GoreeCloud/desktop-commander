@@ -37,4 +37,4 @@ This baseline is for local use and testing; no container deployment is claimed. 
 - [docs/OBJECTIVES.md](docs/OBJECTIVES.md) — requirements and acceptance.
 - [NOTICE.md](NOTICE.md) — full upstream provenance and licensing limitations.
 
-No verified stable, public service, self-hosted relay or device deployment. Third-party dependencies and source require further review and testing. This is **not endorsed by or affiliated with** the original upstream parties.
+No verified stable, public service, self-hosted relay or device deployment. The inherited unused release, MQTT fixture and coverage toolchains are not shipped as active npm scripts. The supported local development checks are `npm test` and the CI audits; broader inherited tests and all third-party source still require further review. This is **not endorsed by or affiliated with** the original upstream parties.
