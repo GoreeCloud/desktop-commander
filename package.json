@@ -25,9 +25,9 @@
   ],
   "scripts": {
     "build": "tsc && shx mkdir -p dist/data && shx cp src/data/onboarding-prompts.json dist/data/ && shx mkdir -p dist/remote-device/scripts && shx cp src/remote-device/scripts/blocking-offline-update.js dist/remote-device/scripts/ && node scripts/build-ui-runtime.cjs",
-    "test": "npm run test:goreecloud && npm run build",
+    "test": "npm run build && npm run test:goreecloud",
     "test:ci": "npm test",
-    "test:goreecloud": "node --test test/goreecloud-hardening.test.mjs",
+    "test:goreecloud": "node --test test/goreecloud-hardening.test.mjs test/goreecloud-protocol.test.mjs",
     "validate:tools": "npm run build && node scripts/validate-tools-sync.js",
     "test:upstream": "npm run build && node test/run-ci.js"
   },
@@ -66,7 +66,6 @@
     "cross-fetch": "^4.1.0",
     "exceljs": "^4.4.0",
     "fastest-levenshtein": "^1.0.16",
-    "glob": "^10.3.10",
     "highlight.js": "^11.11.1",
     "isbinaryfile": "^5.0.4",
     "markdown-it": "^14.1.0",
@@ -85,7 +84,7 @@
     "unbash": "6.0.1",
     "unified": "^11.0.5",
     "unpdf": "~1.8.1",
-    "zod": "^3.24.1",
+    "zod": "4.6.7",
     "zod-to-json-schema": "^3.23.5"
   },
   "optionalDependencies": {
