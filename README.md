@@ -18,7 +18,7 @@ Requirements: Node.js 22.12+ and npm on a device you own or are authorized to co
 
 1. Clone https://github.com/GoreeCloud/desktop-commander and enter the project directory.
 2. Run npm ci --ignore-scripts --no-audit --no-fund.
-3. Run npm run test:goreecloud and npm run build.
+3. Run npm test to compile and execute the focused checks and local MCP protocol smoke test.
 4. Configure a **trusted local stdio MCP client** to launch node /absolute/path/to/desktop-commander/dist/index.js --no-onboarding.
 
 Commands, filesystem permissions, file conversion and running processes inherit the user account's privileges. Never install as root, connect to untrusted AI agents, or expose an MCP endpoint publicly without independently reviewed security controls. A client may request network access via its commands, so the telemetry shutoff is **not** a universal network block.
@@ -29,7 +29,7 @@ This baseline is for local use and testing; no container deployment is claimed. 
 
 - [PRIVACY.md](PRIVACY.md) — privacy boundaries and limitations.
 - [SECURITY.md](SECURITY.md) — high-risk command access and reporting.
-- [docs/SECURITY-EXCEPTIONS.md](docs/SECURITY-EXCEPTIONS.md) — **unresolved dependency vulnerabilities and release blockers**.
+- [docs/SECURITY-EXCEPTIONS.md](docs/SECURITY-EXCEPTIONS.md) — latest dependency audit and outstanding security acceptance gates.
 - [docs/FEATURES.md](docs/FEATURES.md) — implemented vs planned capability.
 - [docs/ROADMAP.md](docs/ROADMAP.md) — next technical steps.
 - [docs/OBJECTIVES.md](docs/OBJECTIVES.md) — requirements and acceptance.
